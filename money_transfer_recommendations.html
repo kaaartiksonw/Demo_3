@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Money Transfer Improvement Recommendations</title>
+	<style>
+		:root {
+			color-scheme: light;
+			--ink: #1d2b2a;
+			--muted: #526461;
+			--line: #c9d5d1;
+			--surface: #f3f7f4;
+			--accent: #145c4b;
+			--urgent: #8d311f;
+		}
+
+		* { box-sizing: border-box; }
+
+		body {
+			max-width: 1120px;
+			margin: 0 auto;
+			padding: 2rem 1.25rem;
+			color: var(--ink);
+			background: #fff;
+			font: 16px/1.55 system-ui, sans-serif;
+		}
+
+		h1 { margin: 0 0 0.4rem; font-size: 1.8rem; line-height: 1.2; }
+		h2 { margin: 1.5rem 0 0.65rem; font-size: 1.25rem; }
+		.intro, .note { color: var(--muted); }
+		.intro { margin: 0 0 1.5rem; }
+		.table-wrap { overflow-x: auto; }
+
+		table { width: 100%; border-collapse: collapse; min-width: 760px; }
+		caption { padding: 0 0 0.75rem; text-align: left; font-weight: 700; }
+		th, td {
+			padding: 0.8rem;
+			border: 1px solid var(--line);
+			text-align: left;
+			vertical-align: top;
+		}
+		th { color: #fff; background: var(--accent); }
+		tbody tr:nth-child(even) { background: var(--surface); }
+		tbody td:first-child { font-weight: 700; }
+		.p0 { color: var(--urgent); font-weight: 700; }
+		.note { margin-top: 1.25rem; }
+
+		@media (max-width: 600px) {
+			body { padding: 1.25rem 0.8rem; }
+			h1 { font-size: 1.5rem; }
+		}
+	</style>
+</head>
+<body>
+	<main>
+		<h1>Money Transfer Improvement Recommendations</h1>
+		<p class="intro">Prioritized actions based on the transfer test results.</p>
+
+		<div class="table-wrap">
+			<table>
+				<caption>Recommendations ranked by priority</caption>
+				<thead>
+					<tr>
+						<th scope="col">Rank</th>
+						<th scope="col">Priority</th>
+						<th scope="col">Recommendation</th>
+						<th scope="col">Related test / defect</th>
+						<th scope="col">Expected benefit</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td class="p0">P0</td>
+						<td>Make transfer creation idempotent and reconcile transaction status before retrying. When the result is uncertain, show a pending state and check the ledger before another debit.</td>
+						<td>TC06 / DEF-102; TC13 is blocked pending this fix.</td>
+						<td>Prevents duplicate debits and supports safe recovery after network interruptions.</td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td>P1</td>
+						<td>Improve OTP delivery monitoring and provide clear resend/status feedback plus a secure alternative verification path. Retain OTP expiration and attempt limits.</td>
+						<td>TC03 / DEF-101 (Critical).</td>
+						<td>Reduces authentication-related abandonment without weakening security.</td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td>P1</td>
+						<td>Load-test and tune the transfer path for the 500-user peak scenario. Monitor latency and establish capacity thresholds before performance exceeds the service target.</td>
+						<td>TC15 / DEF-105.</td>
+						<td>Reduces delays and failed or abandoned transfers during peak demand.</td>
+					</tr>
+					<tr>
+						<td>4</td>
+						<td>P2</td>
+						<td>Validate beneficiary details at the field, explain what needs correction, and preserve entered values when displaying errors.</td>
+						<td>TC12 / DEF-104.</td>
+						<td>Helps users correct mistakes quickly and avoid repeated submissions.</td>
+					</tr>
+					<tr>
+						<td>5</td>
+						<td>P2</td>
+						<td>Keep the confirmation action visible on small screens. Test common viewport sizes and check accessible focus and touch targets.</td>
+						<td>TC09 / DEF-103.</td>
+						<td>Makes transfer confirmation usable on smaller devices.</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<p class="note"><strong>Security note:</strong> Address DEF-102 first because duplicate debits pose a direct financial-integrity risk. TC11 (session timeout) passed and should remain a regression check.</p>
+	</main>
+</body>
+</html>

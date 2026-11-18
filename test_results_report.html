@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Money Transfer Test Results Report</title>
+	<style>
+		:root {
+			color-scheme: light;
+			--ink: #1d2b2a;
+			--muted: #526461;
+			--line: #c9d5d1;
+			--surface: #f3f7f4;
+			--accent: #145c4b;
+			--pass: #17613a;
+			--fail: #9c3426;
+			--blocked: #76520e;
+		}
+
+		* { box-sizing: border-box; }
+
+		body {
+			max-width: 1080px;
+			margin: 0 auto;
+			padding: 2rem 1.25rem;
+			color: var(--ink);
+			background: #fff;
+			font: 16px/1.55 system-ui, sans-serif;
+		}
+
+		h1 { margin: 0 0 0.35rem; font-size: 1.8rem; line-height: 1.2; }
+		h2 { margin: 2rem 0 0.65rem; font-size: 1.25rem; }
+		.subtitle, .note { color: var(--muted); }
+		.subtitle { margin: 0 0 1.5rem; }
+		.table-wrap { overflow-x: auto; }
+
+		table { width: 100%; border-collapse: collapse; min-width: 560px; }
+		th, td {
+			padding: 0.7rem 0.8rem;
+			border: 1px solid var(--line);
+			text-align: left;
+			vertical-align: top;
+		}
+		th { color: #fff; background: var(--accent); }
+		tbody tr:nth-child(even) { background: var(--surface); }
+		.pass { color: var(--pass); font-weight: 700; }
+		.fail { color: var(--fail); font-weight: 700; }
+		.blocked { color: var(--blocked); font-weight: 700; }
+		.note { margin-top: 0.8rem; }
+
+		@media (max-width: 600px) {
+			body { padding: 1.25rem 0.8rem; }
+			h1 { font-size: 1.5rem; }
+		}
+	</style>
+</head>
+<body>
+	<main>
+		<h1>Money Transfer Test Results</h1>
+		<p class="subtitle">QA summary based on 15 test cases for the mobile banking transfer feature.</p>
+
+		<section aria-labelledby="summary-heading">
+			<h2 id="summary-heading">Execution Summary</h2>
+			<div class="table-wrap">
+				<table>
+					<thead>
+						<tr><th scope="col">Measure</th><th scope="col">Result</th></tr>
+					</thead>
+					<tbody>
+						<tr><td>Total test cases</td><td>15</td></tr>
+						<tr><td>Passed</td><td class="pass">9</td></tr>
+						<tr><td>Failed</td><td class="fail">5</td></tr>
+						<tr><td>Blocked</td><td class="blocked">1</td></tr>
+						<tr><td>Pass rate</td><td>64.3% (9 passed out of 14 completed; blocked test excluded)</td></tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+		<section aria-labelledby="severity-heading">
+			<h2 id="severity-heading">Defects by Severity</h2>
+			<div class="table-wrap">
+				<table>
+					<thead>
+						<tr><th scope="col">Severity</th><th scope="col">Count</th><th scope="col">Defect IDs</th></tr>
+					</thead>
+					<tbody>
+						<tr><td>Critical</td><td>1</td><td>DEF-101</td></tr>
+						<tr><td>Major</td><td>3</td><td>DEF-102, DEF-104, DEF-105</td></tr>
+						<tr><td>Minor</td><td>1</td><td>DEF-103</td></tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+		<section aria-labelledby="module-heading">
+			<h2 id="module-heading">Failed Tests by Module</h2>
+			<div class="table-wrap">
+				<table>
+					<thead>
+						<tr><th scope="col">Module</th><th scope="col">Failed tests</th><th scope="col">Test / defect</th></tr>
+					</thead>
+					<tbody>
+						<tr><td>Authentication</td><td>1</td><td>TC03 / DEF-101</td></tr>
+						<tr><td>Reliability</td><td>1</td><td>TC06 / DEF-102</td></tr>
+						<tr><td>UI</td><td>1</td><td>TC09 / DEF-103</td></tr>
+						<tr><td>Validation</td><td>1</td><td>TC12 / DEF-104</td></tr>
+						<tr><td>Performance</td><td>1</td><td>TC15 / DEF-105</td></tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+		<section aria-labelledby="failures-heading">
+			<h2 id="failures-heading">Failure Details</h2>
+			<div class="table-wrap">
+				<table>
+					<thead>
+						<tr>
+							<th scope="col">Test ID</th>
+							<th scope="col">Scenario</th>
+							<th scope="col">Defect</th>
+							<th scope="col">Observed result</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr><td>TC03</td><td>Transfer to a new payee with OTP</td><td>DEF-101 (Critical)</td><td>OTP was not received within 60 seconds.</td></tr>
+						<tr><td>TC06</td><td>Transfer during network loss</td><td>DEF-102 (Major)</td><td>Automatic retry caused a duplicate debit.</td></tr>
+						<tr><td>TC09</td><td>Confirmation screen on small devices</td><td>DEF-103 (Minor)</td><td>Confirm button was hidden on five-inch screens.</td></tr>
+						<tr><td>TC12</td><td>Invalid beneficiary account number</td><td>DEF-104 (Major)</td><td>Generic error appeared instead of a field-level message.</td></tr>
+						<tr><td>TC15</td><td>Transfer under peak load of 500 users</td><td>DEF-105 (Major)</td><td>Response time was 12.4 seconds, exceeding the five-second target.</td></tr>
+					</tbody>
+				</table>
+			</div>
+			<p class="note"><strong>Blocked:</strong> TC13, Transfer history update, is blocked until DEF-102 is fixed.</p>
+		</section>
+	</main>
+</body>
+</html>
